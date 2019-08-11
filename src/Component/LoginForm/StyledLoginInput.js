@@ -10,7 +10,7 @@ function StyledLoginInput(props) {
         <div className={css.inputformgap}>
             <div>
                 <FontAwesomeIcon icon={props.icon} className={css.inputicon} ></FontAwesomeIcon>
-                <input type={props.type} placeholder={props.placeholder} className={css.inputform}></input>
+                <input type={props.type} placeholder={props.placeholder} className={css.inputform} value={props.name} onChange={props.valcallback}></input>
             </div>
             <hr className={css.inputhr}></hr>
         </div>
