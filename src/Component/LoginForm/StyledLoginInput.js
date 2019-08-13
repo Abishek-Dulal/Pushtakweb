@@ -1,5 +1,5 @@
 import React from 'react'
-import darkcss from "./login.module.css";
+import darkcss from "./../../Componentcss/style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 

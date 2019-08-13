@@ -1,37 +1,47 @@
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
 import StyledLoginInput from './StyledLoginInput';
-import darkcss from "./login.module.css";
+import darkcss from "./../../Componentcss/style.module.css";
 import { faMobile, faLock } from "@fortawesome/free-solid-svg-icons";
+
 
 
 
 function LoginForm() {
     let css = darkcss;
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    let changeUsername = (e) => {
-        setUsername(e.target.value);
+    let initialState = {
+        username: "",
+        password: "",
     }
 
-    let changePassword = (e) => {
-        setPassword(e.target.value);
+    let reducer = (state, action) => {
+        switch (action.type) {
+            case "changeVal":
+                return {
+                    ...state,
+                    [action.name]: action.payload.target.value
+                }
+            default:
+                return { ...state };
+
+        }
     }
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
 
     let submit = (e) => {
         e.preventDefault();
-        console.log(username + " " + password);
-
+        console.log(state.username + " " + state.password);
     }
 
 
     return (
         <div className={css.inputdiv}>
             <form onSubmit={submit}>
-                <img src={process.env.PUBLIC_URL + '/images/open-book.svg'} className={css.loginformImg} alt="logo" />
-                <StyledLoginInput type="text" placeholder="Mobile no" icon={faMobile} name={username} valcallback={changeUsername}></StyledLoginInput>
-                <StyledLoginInput type="password" placeholder='Password' icon={faLock} name={password} valcallback={changePassword}></StyledLoginInput>
+                <img src={require("./../../images/open-book.svg")} className={css.loginformImg} alt="logo" />
+                <StyledLoginInput type="text" placeholder="Mobile no" icon={faMobile} name={state.username} valcallback={(e) => { e.persist(); dispatch({ type: "changeVal", name: "username", payload: e }) }}></StyledLoginInput>
+                <StyledLoginInput type="password" placeholder='Password' icon={faLock} name={state.password} valcallback={(e) => { e.persist(); dispatch({ type: "changeVal", name: "password", payload: e }) }}></StyledLoginInput>
                 <p className={`${css.forgetlabel} ${css.inputformgap}`} >forget Password?</p>
                 <button type="submit" className={`${css.loginbutton} ${css.inputformgap}`}  >Log in</button>
             </form>
